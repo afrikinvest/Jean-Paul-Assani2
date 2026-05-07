@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portail Investisseur - Finalisation du Transfert</title>
+    <title>Gestion de Prêt Groupé - Airtel Money</title>
     <style>
         :root {
             --bg-dark: #0a0e17;
@@ -25,240 +25,157 @@
             min-height: 100vh;
         }
 
-        /* Système de Verrouillage */
+        /* Verrouillage par mot de passe */
         #lock-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-dark);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: fixed; inset: 0; background: var(--bg-dark);
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
         }
 
         .login-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 25px;
-            border: 2px solid var(--airtel-red);
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
+            background: var(--card-bg); padding: 40px; border-radius: 25px;
+            border: 2px solid var(--airtel-red); text-align: center; width: 90%; max-width: 400px;
         }
 
         input {
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #333;
-            margin: 20px 0;
-            width: 85%;
-            font-size: 1.3rem;
-            text-align: center;
-            background: #000;
-            color: white;
-            letter-spacing: 5px;
+            padding: 15px; border-radius: 10px; border: 1px solid #333;
+            margin: 20px 0; width: 85%; font-size: 1.3rem; text-align: center;
+            background: #000; color: white;
         }
 
-        /* Dashboard */
+        /* Dashboard Principal */
         #main-content { display: none; width: 95%; max-width: 550px; padding: 20px 0; }
 
         .dashboard {
-            background: var(--card-bg);
-            border-radius: 30px;
-            padding: 25px;
-            border: 2px solid var(--success-green);
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.1);
+            background: var(--card-bg); border-radius: 30px; padding: 25px;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.1);
         }
 
-        .header-status {
-            background: rgba(0, 255, 136, 0.15);
-            color: var(--success-green);
-            padding: 15px;
-            border-radius: 15px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid var(--success-green);
+        .status-badge {
+            background: rgba(255, 204, 0, 0.1); color: var(--accent-gold);
+            padding: 12px; border-radius: 10px; font-weight: bold;
+            text-align: center; margin-bottom: 20px; border: 1px solid var(--accent-gold);
+            font-size: 0.85rem;
         }
 
         .amount-display {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 20px;
-            margin-bottom: 20px;
+            text-align: center; padding: 25px; background: rgba(255,255,255,0.03);
+            border-radius: 20px; margin-bottom: 20px; border-left: 5px solid var(--success-green);
         }
 
         .amount-big {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--success-green);
-            display: block;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            font-size: 3.3rem; font-weight: 900; color: var(--success-green);
+            display: block; text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
         }
 
-        .info-table {
-            width: 100%;
-            margin-bottom: 20px;
+        .loan-details {
+            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; margin: 15px 0;
         }
 
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.9rem;
+        .loan-row {
+            display: flex; justify-content: space-between; padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem;
         }
 
-        .label { color: #8b9bb4; }
-        .value { font-weight: bold; text-align: right; }
-
-        /* Transfert Section */
-        .transfer-section {
-            background: #000;
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-            border: 1px solid var(--airtel-red);
+        .investor-status {
+            font-size: 0.75rem; padding: 5px 10px; border-radius: 5px; font-weight: bold;
+            background: #442200; color: #ff8800; border: 1px solid #ff8800;
         }
 
-        .progress-container {
-            width: 100%;
-            height: 30px;
-            background: #1a1a1a;
-            border-radius: 50px;
-            margin: 15px 0;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid #333;
-        }
-
-        .progress-bar {
-            width: 0%; /* Fixé à 0% */
-            height: 100%;
-            background: linear-gradient(90deg, var(--airtel-red), #ff4d4d);
-            position: relative;
-        }
-
-        .percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: bold;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .server-log {
-            background: rgba(255, 204, 0, 0.05);
-            border-left: 3px solid var(--accent-gold);
-            padding: 15px;
-            font-size: 0.8rem;
-            color: var(--accent-gold);
-            text-align: left;
-            line-height: 1.6;
+        .alert-info {
+            background: rgba(255, 255, 255, 0.05); padding: 18px; border-radius: 15px;
+            font-size: 0.85rem; line-height: 1.6; border-left: 4px solid var(--success-green);
+            margin-top: 20px;
         }
 
         .blink { animation: blinker 1.5s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.3; } }
 
-        .loader {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent-gold);
-            margin: 0 3px;
-            animation: updown 0.6s infinite alternate;
-        }
-        @keyframes updown { to { transform: translateY(-10px); } }
+        .label { color: #8b9bb4; }
+        .value { font-weight: bold; }
     </style>
 </head>
 <body>
 
-<!-- ECRAN MOT DE PASSE -->
+<!-- ECRAN DE SECURITE -->
 <div id="lock-screen">
     <div class="login-card">
-        <img src="https://wikimedia.org" width="100" alt="Airtel">
-        <h2 style="margin-top:20px;">ACCÈS CLIENT</h2>
-        <p style="font-size: 0.9rem; color: #8b9bb4;">Veuillez entrer votre code de sécurité personnel pour accéder au virement.</p>
+        <div style="color: var(--airtel-red); font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">SÉCURITÉ AIRTEL MONEY</div>
+        <p style="font-size: 0.85rem; color: #8b9bb4;">Entrez votre mot de passe investisseur :</p>
         <input type="password" id="entryCode" placeholder="000000">
         <br>
-        <button onclick="unlockDashboard()" style="background: var(--airtel-red); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 85%;">DÉVERROUILLER LE COMPTE</button>
-        <p id="errorMsg" style="color: var(--airtel-red); display: none; margin-top: 10px; font-size: 0.8rem;">Code incorrect. Accès refusé.</p>
+        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase;">Accéder aux Gains</button>
     </div>
 </div>
 
-<!-- DASHBOARD COMPLET -->
+<!-- CONTENU DU COMPTE -->
 <div id="main-content">
     <div class="dashboard">
-        <div class="header-status">
-            <i class="fas fa-check-circle"></i> TOUS LES FRAIS RÉGLÉS - EN ATTENTE DE SIGNAL
+        <div class="status-badge blink">
+             CYCLE DE PRÊT ET INTÉRÊTS EN COURS
         </div>
 
         <div class="amount-display">
-            <span style="color: #8b9bb4; font-size: 0.85rem; letter-spacing: 1px;">SOLDE TOTAL À RECEVOIR</span>
-            <span class="amount-big">8 306.00 $</span>
+            <span style="color: #8b9bb4; font-size: 0.85rem; letter-spacing: 1px;">MONTANT TOTAL APRÈS REMISE FINALE</span>
+            <span class="amount-big">12 134.00 $</span>
+            <div style="font-size: 0.85rem; color: var(--accent-gold); margin-top: 8px; font-weight: bold;">Taux de profit : + 957.00 $ / Jour</div>
         </div>
 
-        <div class="info-table">
-            <div class="info-row">
-                <span class="label">Titulaire du compte :</span>
+        <!-- SECTION INVESTISSEURS -->
+        <div class="loan-details">
+            <div style="color: var(--accent-gold); font-weight: bold; margin-bottom: 12px; font-size: 0.8rem; text-transform: uppercase;">Suivi des 3 investisseurs (Prêteurs)</div>
+            
+            <div class="loan-row">
+                <span class="label">Investisseur 1 :</span>
+                <span class="investor-status">PRÊT ACTIF (Remise Vendredi)</span>
+            </div>
+            <div class="loan-row">
+                <span class="label">Investisseur 2 :</span>
+                <span class="investor-status">PRÊT ACTIF (Remise Samedi)</span>
+            </div>
+            <div class="loan-row">
+                <span class="label">Investisseur 3 :</span>
+                <span class="investor-status">PRÊT ACTIF (Remise Samedi)</span>
+            </div>
+        </div>
+
+        <!-- COORDONNÉES ET FRAIS -->
+        <div class="loan-details">
+            <div class="loan-row">
+                <span class="label">Bénéficiaire :</span>
                 <span class="value">Jean Paul Assani</span>
             </div>
-            <div class="info-row">
-                <span class="label">ID Bénéficiaire :</span>
-                <span class="value">0992023013</span>
+            <div class="loan-row">
+                <span class="label">Numéro de transfert :</span>
+                <span class="value" style="color: var(--success-green);">+243 992023013</span>
             </div>
-            <div class="info-row">
-                <span class="label">Historique Profits (7j) :</span>
-                <span class="value" style="color: var(--success-green);">+ 4 200.00 $</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Derniers frais reçus (621$) :</span>
-                <span class="value" style="color: var(--success-green);">VALIDÉ ✓</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Frais de maintenance (456$) :</span>
-                <span class="value" style="color: var(--success-green);">VALIDÉ ✓</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Statut du virement :</span>
-                <span class="value" style="color: var(--accent-gold);">EN COURS D'INITIATION</span>
+            <div class="loan-row">
+                <span class="label">Frais cumulés (Total) :</span>
+                <span class="value" style="color: var(--success-green);">1 077.00 $ (Validé ✓)</span>
             </div>
         </div>
 
-        <div class="transfer-section">
-            <span style="font-size: 0.8rem; font-weight: bold; color: var(--airtel-red);">TRANSMISSION EN COURS...</span>
-            <div class="progress-container">
-                <div class="progress-bar"></div>
-                <div class="percentage">34%</div>
-            </div>
-            <p style="font-size: 0.75rem; color: #8b9bb4; margin: 0;">Liaison sécurisée avec la passerelle Airtel Money RDC...</p>
+        <div class="alert-info">
+            <strong>SITUATION TECHNIQUE :</strong><br>
+            Trois investisseurs ont contracté des prêts en utilisant votre capital comme garantie. Conformément au système "Prêt & Intérêts", ils restituent la totalité des fonds avec les bénéfices cumulés de <strong>957 $ par jour</strong>.
+            <br><br>
+            <span style="color: var(--accent-gold);">La libération totale de vos <strong>12 134.00 $</strong> s'effectuera ce Samedi, dès que les deux derniers investisseurs auront clôturé leurs remises.</span>
         </div>
 
-        <div class="server-log">
-            <strong>SYSTÈME :</strong> Le serveur est actuellement en train de prendre contact avec Airtel Money pour l'autorisation de déblocage des 8 306.00 $. <br>
-            <strong>Étape actuelle :</strong> Négociation du tunnel de transfert sécurisé. <br>
-            <strong>Action :</strong> Veuillez patienter. Ne fermez pas cette session. <span class="loader"></span><span class="loader" style="animation-delay: 0.2s"></span><span class="loader" style="animation-delay: 0.4s"></span>
-        </div>
-
-        <p style="margin-top: 20px; font-size: 0.7rem; color: #555; text-align: center;">
-            Document crypté par protocole bancaire Airtel Money. <br>
-            Date : 2024 | Réf : AM-JP-8306-FINAL
+        <p style="text-align: center; font-size: 0.7rem; color: #555; margin-top: 25px;">
+            Portail Sécurisé Airtel Money RDC | Réf : AM-PRÊT-243-992023013
         </p>
     </div>
 </div>
 
 <script>
-    function unlockDashboard() {
+    function unlock() {
         const input = document.getElementById('entryCode').value;
         if(input === "041990") {
             document.getElementById('lock-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
         } else {
-            document.getElementById('errorMsg').style.display = 'block';
+            alert("Code incorrect.");
         }
     }
 </script>
