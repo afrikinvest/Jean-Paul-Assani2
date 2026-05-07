@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de Prêt Groupé - Airtel Money</title>
+    <title>Portefeuille Premium - Jean Paul Assani</title>
     <style>
         :root {
-            --bg-dark: #0a0e17;
+            --bg-dark: #0a111a;
             --airtel-red: #ff0000;
             --success-green: #00ff88;
             --card-bg: #161d2f;
@@ -25,7 +25,7 @@
             min-height: 100vh;
         }
 
-        /* Verrouillage par mot de passe */
+        /* Système de Verrouillage */
         #lock-screen {
             position: fixed; inset: 0; background: var(--bg-dark);
             z-index: 1000; display: flex; justify-content: center; align-items: center;
@@ -39,143 +39,176 @@
         input {
             padding: 15px; border-radius: 10px; border: 1px solid #333;
             margin: 20px 0; width: 85%; font-size: 1.3rem; text-align: center;
-            background: #000; color: white;
+            background: #000; color: white; letter-spacing: 5px;
         }
 
         /* Dashboard Principal */
-        #main-content { display: none; width: 95%; max-width: 550px; padding: 20px 0; }
+        #main-content { display: none; width: 95%; max-width: 600px; padding: 20px 0; }
 
         .dashboard {
             background: var(--card-bg); border-radius: 30px; padding: 25px;
-            border: 2px solid var(--accent-gold);
-            box-shadow: 0 0 50px rgba(255, 204, 0, 0.1);
+            border: 2px solid var(--success-green);
+            box-shadow: 0 0 60px rgba(0, 255, 136, 0.1);
         }
 
-        .status-badge {
-            background: rgba(255, 204, 0, 0.1); color: var(--accent-gold);
-            padding: 12px; border-radius: 10px; font-weight: bold;
-            text-align: center; margin-bottom: 20px; border: 1px solid var(--accent-gold);
-            font-size: 0.85rem;
+        .status-header {
+            background: rgba(0, 255, 136, 0.1); color: var(--success-green);
+            padding: 15px; border-radius: 15px; font-weight: bold;
+            text-align: center; margin-bottom: 20px; border: 1px solid var(--success-green);
+            font-size: 0.8rem; letter-spacing: 1px;
         }
 
         .amount-display {
-            text-align: center; padding: 25px; background: rgba(255,255,255,0.03);
-            border-radius: 20px; margin-bottom: 20px; border-left: 5px solid var(--success-green);
+            text-align: center; padding: 30px; background: rgba(255,255,255,0.03);
+            border-radius: 25px; margin-bottom: 25px; border-bottom: 5px solid var(--success-green);
         }
 
         .amount-big {
-            font-size: 3.3rem; font-weight: 900; color: var(--success-green);
-            display: block; text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            font-size: 3.8rem; font-weight: 900; color: var(--success-green);
+            display: block; text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
 
-        .loan-details {
-            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; margin: 15px 0;
+        .section-title {
+            color: var(--accent-gold); font-weight: bold; margin: 20px 0 10px 0;
+            font-size: 0.85rem; text-transform: uppercase; border-bottom: 1px solid #333;
+            padding-bottom: 5px;
         }
 
-        .loan-row {
-            display: flex; justify-content: space-between; padding: 12px 0;
+        .details-box {
+            background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex; justify-content: space-between; padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem;
         }
 
-        .investor-status {
-            font-size: 0.75rem; padding: 5px 10px; border-radius: 5px; font-weight: bold;
-            background: #442200; color: #ff8800; border: 1px solid #ff8800;
-        }
-
-        .alert-info {
-            background: rgba(255, 255, 255, 0.05); padding: 18px; border-radius: 15px;
-            font-size: 0.85rem; line-height: 1.6; border-left: 4px solid var(--success-green);
-            margin-top: 20px;
-        }
-
-        .blink { animation: blinker 1.5s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0.3; } }
-
         .label { color: #8b9bb4; }
         .value { font-weight: bold; }
+
+        .investor-card {
+            background: #1e263a; padding: 12px; border-radius: 10px;
+            margin-bottom: 10px; border-left: 4px solid var(--accent-gold);
+        }
+
+        .badge-wait {
+            font-size: 0.7rem; background: var(--accent-gold); color: #000;
+            padding: 2px 8px; border-radius: 4px; font-weight: bold; float: right;
+        }
+
+        .alert-final {
+            background: rgba(255, 204, 0, 0.05); padding: 20px; border-radius: 20px;
+            border: 1px dashed var(--accent-gold); font-size: 0.9rem; line-height: 1.6;
+        }
+
+        .blink { animation: blinker 2s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-<!-- ECRAN DE SECURITE -->
+<!-- ECRAN DE VERROUILLAGE -->
 <div id="lock-screen">
     <div class="login-card">
-        <div style="color: var(--airtel-red); font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">SÉCURITÉ AIRTEL MONEY</div>
-        <p style="font-size: 0.85rem; color: #8b9bb4;">Entrez votre mot de passe investisseur :</p>
-        <input type="password" id="entryCode" placeholder="000000">
+        <div style="color: var(--airtel-red); font-weight: 900; font-size: 1.5rem; margin-bottom: 10px;">SÉCURITÉ AIRTEL</div>
+        <p style="font-size: 0.8rem; color: #8b9bb4;">Accès réservé : Jean Paul Assani</p>
+        <input type="password" id="entryCode" placeholder="Code PIN">
         <br>
-        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase;">Accéder aux Gains</button>
+        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 85%;">OUVRIR MA SESSION</button>
     </div>
 </div>
 
-<!-- CONTENU DU COMPTE -->
+<!-- DASHBOARD -->
 <div id="main-content">
     <div class="dashboard">
-        <div class="status-badge blink">
-             CYCLE DE PRÊT ET INTÉRÊTS EN COURS
+        <div class="status-header">
+            ✓ COMPTE SOUS GESTION DE PRÊT À HAUT RENDEMENT
         </div>
 
         <div class="amount-display">
-            <span style="color: #8b9bb4; font-size: 0.85rem; letter-spacing: 1px;">MONTANT TOTAL APRÈS REMISE FINALE</span>
-            <span class="amount-big">12 134.00 $</span>
-            <div style="font-size: 0.85rem; color: var(--accent-gold); margin-top: 8px; font-weight: bold;">Taux de profit : + 957.00 $ / Jour</div>
-        </div>
-
-        <!-- SECTION INVESTISSEURS -->
-        <div class="loan-details">
-            <div style="color: var(--accent-gold); font-weight: bold; margin-bottom: 12px; font-size: 0.8rem; text-transform: uppercase;">Suivi des 3 investisseurs (Prêteurs)</div>
-            
-            <div class="loan-row">
-                <span class="label">Investisseur 1 :</span>
-                <span class="investor-status">PRÊT ACTIF (Remise Vendredi)</span>
-            </div>
-            <div class="loan-row">
-                <span class="label">Investisseur 2 :</span>
-                <span class="investor-status">PRÊT ACTIF (Remise Samedi)</span>
-            </div>
-            <div class="loan-row">
-                <span class="label">Investisseur 3 :</span>
-                <span class="investor-status">PRÊT ACTIF (Remise Samedi)</span>
+            <span style="color: #8b9bb4; font-size: 0.9rem;">TOTAL À RECEVOIR CE SAMEDI SOIR</span>
+            <span class="amount-big">16 846.00 $</span>
+            <div style="color: var(--accent-gold); font-weight: bold; margin-top: 10px;">
+                Taux Quotidien : + 957.00 $ / Jour
             </div>
         </div>
 
-        <!-- COORDONNÉES ET FRAIS -->
-        <div class="loan-details">
-            <div class="loan-row">
+        <div class="section-title">Calcul de la Croissance Fin de Cycle</div>
+        <div class="details-box">
+            <div class="row">
+                <span class="label">Ancien Profit Cumulé :</span>
+                <span class="value">8 306.00 $</span>
+            </div>
+            <div class="row">
+                <span class="label">Nouveaux Intérêts (957$ x 8j) :</span>
+                <span class="value" style="color: var(--success-green);">+ 7 656.00 $</span>
+            </div>
+            <div class="row">
+                <span class="label">Bonus de Clôture Prêt :</span>
+                <span class="value" style="color: var(--success-green);">+ 884.00 $</span>
+            </div>
+            <div class="row" style="border: none; margin-top: 5px; background: rgba(0,255,136,0.1); padding: 10px; border-radius: 5px;">
+                <span class="label" style="color: white;">TOTAL CALCULÉ :</span>
+                <span class="value" style="color: var(--success-green);">16 846.00 $</span>
+            </div>
+        </div>
+
+        <div class="section-title">Suivi des Prêteurs (Remises Attendues)</div>
+        <div class="investor-card">
+            <span class="badge-wait">VENDREDI</span>
+            <strong>Investisseur 1 : Mr. Koffi</strong><br>
+            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Préparation du remboursement</span>
+        </div>
+        <div class="investor-card">
+            <span class="badge-wait">SAMEDI</span>
+            <strong>Investisseur 2 : Mme. Sarah</strong><br>
+            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Clôture des intérêts journaliers</span>
+        </div>
+        <div class="investor-card">
+            <span class="badge-wait">SAMEDI</span>
+            <strong>Investisseur 3 : Mr. David</strong><br>
+            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Libération finale du capital</span>
+        </div>
+
+        <div class="section-title">Détails de Transfert</div>
+        <div class="details-box">
+            <div class="row">
                 <span class="label">Bénéficiaire :</span>
                 <span class="value">Jean Paul Assani</span>
             </div>
-            <div class="loan-row">
-                <span class="label">Numéro de transfert :</span>
+            <div class="row">
+                <span class="label">Numéro de réception :</span>
                 <span class="value" style="color: var(--success-green);">+243 992023013</span>
             </div>
-            <div class="loan-row">
-                <span class="label">Frais cumulés (Total) :</span>
-                <span class="value" style="color: var(--success-green);">1 077.00 $ (Validé ✓)</span>
+            <div class="row">
+                <span class="label">Frais Totaux Payés :</span>
+                <span class="value" style="color: var(--success-green);">1 077.00 $ (ENRÉGISTRÉS ✓)</span>
             </div>
         </div>
 
-        <div class="alert-info">
-            <strong>SITUATION TECHNIQUE :</strong><br>
-            Trois investisseurs ont contracté des prêts en utilisant votre capital comme garantie. Conformément au système "Prêt & Intérêts", ils restituent la totalité des fonds avec les bénéfices cumulés de <strong>957 $ par jour</strong>.
+        <div class="alert-final">
+            <strong>⚠️ NOTE IMPORTANTE :</strong><br>
+            Votre solde a été optimisé suite à l'extension du prêt groupé accordé à <strong>Mr. Koffi, Mme. Sarah et Mr. David</strong>. Leurs intérêts combinés de <strong>957 $ par jour</strong> s'ajoutent à votre ancien profit de 8 306 $.
             <br><br>
-            <span style="color: var(--accent-gold);">La libération totale de vos <strong>12 134.00 $</strong> s'effectuera ce Samedi, dès que les deux derniers investisseurs auront clôturé leurs remises.</span>
+            <span class="blink" style="color: var(--accent-gold); font-weight: bold;">
+                Le virement de 16 846.00 $ sera déclenché automatiquement vers votre compte Airtel Money ce Samedi soir.
+            </span>
         </div>
 
-        <p style="text-align: center; font-size: 0.7rem; color: #555; margin-top: 25px;">
-            Portail Sécurisé Airtel Money RDC | Réf : AM-PRÊT-243-992023013
+        <p style="text-align: center; font-size: 0.7rem; color: #555; margin-top: 30px;">
+            Système Certifié Airtel Money RDC | Réf : AM-GLOBAL-16846-ASSANI
         </p>
     </div>
 </div>
 
 <script>
     function unlock() {
-        const input = document.getElementById('entryCode').value;
-        if(input === "041990") {
+        const val = document.getElementById('entryCode').value;
+        if(val === "041990") {
             document.getElementById('lock-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
         } else {
-            alert("Code incorrect.");
+            alert("Accès refusé : Code incorrect.");
         }
     }
 </script>
