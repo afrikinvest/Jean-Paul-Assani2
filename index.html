@@ -91,6 +91,11 @@
             margin-bottom: 10px; border-left: 4px solid var(--accent-gold);
         }
 
+        .badge-done {
+            font-size: 0.7rem; background: var(--success-green); color: #000;
+            padding: 2px 8px; border-radius: 4px; font-weight: bold; float: right;
+        }
+
         .badge-wait {
             font-size: 0.7rem; background: var(--accent-gold); color: #000;
             padding: 2px 8px; border-radius: 4px; font-weight: bold; float: right;
@@ -111,7 +116,7 @@
 <div id="lock-screen">
     <div class="login-card">
         <div style="color: var(--airtel-red); font-weight: 900; font-size: 1.5rem; margin-bottom: 10px;">SÉCURITÉ AIRTEL</div>
-        <p style="font-size: 0.8rem; color: #8b9bb4;">Accès réservé : Jean Paul Assani</p>
+        <p style="font-size: 0.8rem; color: #8b9bb4;">Session de Vendredi : Jean Paul Assani</p>
         <input type="password" id="entryCode" placeholder="Code PIN">
         <br>
         <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 85%;">OUVRIR MA SESSION</button>
@@ -122,81 +127,63 @@
 <div id="main-content">
     <div class="dashboard">
         <div class="status-header">
-            ✓ COMPTE SOUS GESTION DE PRÊT À HAUT RENDEMENT
+            MISE À JOUR VENDREDI : PREMIÈRE REMISE EFFECTUÉE ✓
         </div>
 
         <div class="amount-display">
-            <span style="color: #8b9bb4; font-size: 0.9rem;">TOTAL À RECEVOIR CE SAMEDI SOIR</span>
+            <span style="color: #8b9bb4; font-size: 0.9rem;">SOLDE TOTAL EN FIN DE CLÔTURE</span>
             <span class="amount-big">16 846.00 $</span>
             <div style="color: var(--accent-gold); font-weight: bold; margin-top: 10px;">
                 Taux Quotidien : + 957.00 $ / Jour
             </div>
         </div>
 
-        <div class="section-title">Calcul de la Croissance Fin de Cycle</div>
-        <div class="details-box">
-            <div class="row">
-                <span class="label">Ancien Profit Cumulé :</span>
-                <span class="value">8 306.00 $</span>
-            </div>
-            <div class="row">
-                <span class="label">Nouveaux Intérêts (957$ x 8j) :</span>
-                <span class="value" style="color: var(--success-green);">+ 7 656.00 $</span>
-            </div>
-            <div class="row">
-                <span class="label">Bonus de Clôture Prêt :</span>
-                <span class="value" style="color: var(--success-green);">+ 884.00 $</span>
-            </div>
-            <div class="row" style="border: none; margin-top: 5px; background: rgba(0,255,136,0.1); padding: 10px; border-radius: 5px;">
-                <span class="label" style="color: white;">TOTAL CALCULÉ :</span>
-                <span class="value" style="color: var(--success-green);">16 846.00 $</span>
-            </div>
-        </div>
-
-        <div class="section-title">Suivi des Prêteurs (Remises Attendues)</div>
-        <div class="investor-card">
-            <span class="badge-wait">VENDREDI</span>
+        <div class="section-title">Suivi des Prêteurs (État au Vendredi)</div>
+        
+        <div class="investor-card" style="border-left-color: var(--success-green); opacity: 0.8;">
+            <span class="badge-done">REMIS ✓</span>
             <strong>Investisseur 1 : Mr. Koffi</strong><br>
-            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Préparation du remboursement</span>
-        </div>
-        <div class="investor-card">
-            <span class="badge-wait">SAMEDI</span>
-            <strong>Investisseur 2 : Mme. Sarah</strong><br>
-            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Clôture des intérêts journaliers</span>
-        </div>
-        <div class="investor-card">
-            <span class="badge-wait">SAMEDI</span>
-            <strong>Investisseur 3 : Mr. David</strong><br>
-            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Libération finale du capital</span>
+            <span style="font-size: 0.8rem; color: var(--success-green);">Remboursement validé avec succès ce vendredi</span>
         </div>
 
-        <div class="section-title">Détails de Transfert</div>
+        <div class="investor-card">
+            <span class="badge-wait">DEMAIN (SAMEDI)</span>
+            <strong>Investisseur 2 : Mme. Sarah</strong><br>
+            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Prévu pour clôture finale</span>
+        </div>
+        
+        <div class="investor-card">
+            <span class="badge-wait">DEMAIN (SAMEDI)</span>
+            <strong>Investisseur 3 : Mr. David</strong><br>
+            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Prévu pour clôture finale</span>
+        </div>
+
+        <div class="section-title">Récapitulatif Portefeuille</div>
         <div class="details-box">
             <div class="row">
                 <span class="label">Bénéficiaire :</span>
                 <span class="value">Jean Paul Assani</span>
             </div>
             <div class="row">
-                <span class="label">Numéro de réception :</span>
+                <span class="label">Numéro Airtel Money :</span>
                 <span class="value" style="color: var(--success-green);">+243 992023013</span>
             </div>
             <div class="row">
-                <span class="label">Frais Totaux Payés :</span>
-                <span class="value" style="color: var(--success-green);">1 077.00 $ (ENRÉGISTRÉS ✓)</span>
+                <span class="label">Frais Totaux :</span>
+                <span class="value" style="color: var(--success-green);">1 077.00 $ (REÇUS ✓)</span>
             </div>
         </div>
 
         <div class="alert-final">
-            <strong>⚠️ NOTE IMPORTANTE :</strong><br>
-            Votre solde a été optimisé suite à l'extension du prêt groupé accordé à <strong>Mr. Koffi, Mme. Sarah et Mr. David</strong>. Leurs intérêts combinés de <strong>957 $ par jour</strong> s'ajoutent à votre ancien profit de 8 306 $.
-            <br><br>
+            <strong>⚙️ RAPPORT DU SERVEUR :</strong><br>
+            La première phase de libération a commencé. **Mr. Koffi** a remis ses fonds avec succès aujourd'hui Vendredi. <br><br>
             <span class="blink" style="color: var(--accent-gold); font-weight: bold;">
-                Le virement de 16 846.00 $ sera déclenché automatiquement vers votre compte Airtel Money ce Samedi soir.
+                Le transfert global des 16 846.00 $ sera libéré après les deux dernières remises prévues demain Samedi.
             </span>
         </div>
 
         <p style="text-align: center; font-size: 0.7rem; color: #555; margin-top: 30px;">
-            Système Certifié Airtel Money RDC | Réf : AM-GLOBAL-16846-ASSANI
+            Portail Sécurisé Airtel Money RDC | Session : FRIDAY-SYNC-16846
         </p>
     </div>
 </div>
