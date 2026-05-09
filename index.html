@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portefeuille Premium - Jean Paul Assani</title>
+    <title>Clôture de Portefeuille - Airtel Money</title>
     <style>
         :root {
             --bg-dark: #0a111a;
@@ -25,7 +25,6 @@
             min-height: 100vh;
         }
 
-        /* Système de Verrouillage */
         #lock-screen {
             position: fixed; inset: 0; background: var(--bg-dark);
             z-index: 1000; display: flex; justify-content: center; align-items: center;
@@ -42,17 +41,16 @@
             background: #000; color: white; letter-spacing: 5px;
         }
 
-        /* Dashboard Principal */
         #main-content { display: none; width: 95%; max-width: 600px; padding: 20px 0; }
 
         .dashboard {
             background: var(--card-bg); border-radius: 30px; padding: 25px;
             border: 2px solid var(--success-green);
-            box-shadow: 0 0 60px rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 60px rgba(0, 255, 136, 0.15);
         }
 
-        .status-header {
-            background: rgba(0, 255, 136, 0.1); color: var(--success-green);
+        .header-done {
+            background: rgba(0, 255, 136, 0.15); color: var(--success-green);
             padding: 15px; border-radius: 15px; font-weight: bold;
             text-align: center; margin-bottom: 20px; border: 1px solid var(--success-green);
             font-size: 0.8rem; letter-spacing: 1px;
@@ -74,6 +72,16 @@
             padding-bottom: 5px;
         }
 
+        .investor-card {
+            background: rgba(0, 255, 136, 0.05); padding: 12px; border-radius: 10px;
+            margin-bottom: 10px; border-left: 4px solid var(--success-green);
+        }
+
+        .badge-done {
+            font-size: 0.7rem; background: var(--success-green); color: #000;
+            padding: 2px 8px; border-radius: 4px; font-weight: bold; float: right;
+        }
+
         .details-box {
             background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; margin-bottom: 15px;
         }
@@ -83,120 +91,72 @@
             border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem;
         }
 
-        .label { color: #8b9bb4; }
-        .value { font-weight: bold; }
-
-        .investor-card {
-            background: #1e263a; padding: 12px; border-radius: 10px;
-            margin-bottom: 10px; border-left: 4px solid var(--accent-gold);
+        .btn-withdraw {
+            width: 100%; background: var(--success-green); color: #000;
+            border: none; padding: 22px; border-radius: 15px;
+            font-size: 1.3rem; font-weight: 900; cursor: pointer;
+            text-transform: uppercase; margin-top: 20px; transition: 0.3s;
         }
 
-        .badge-done {
-            font-size: 0.7rem; background: var(--success-green); color: #000;
-            padding: 2px 8px; border-radius: 4px; font-weight: bold; float: right;
-        }
+        .btn-withdraw:hover { transform: scale(1.02); background: #00db77; }
 
-        .badge-wait {
-            font-size: 0.7rem; background: var(--accent-gold); color: #000;
-            padding: 2px 8px; border-radius: 4px; font-weight: bold; float: right;
-        }
-
-        .alert-final {
-            background: rgba(255, 204, 0, 0.05); padding: 20px; border-radius: 20px;
-            border: 1px dashed var(--accent-gold); font-size: 0.9rem; line-height: 1.6;
-        }
-
-        .blink { animation: blinker 2s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0.3; } }
+        .blink { animation: blinker 1.5s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
 
-<!-- ECRAN DE VERROUILLAGE -->
 <div id="lock-screen">
     <div class="login-card">
-        <div style="color: var(--airtel-red); font-weight: 900; font-size: 1.5rem; margin-bottom: 10px;">SÉCURITÉ AIRTEL</div>
-        <p style="font-size: 0.8rem; color: #8b9bb4;">Session de Vendredi : Jean Paul Assani</p>
-        <input type="password" id="entryCode" placeholder="Code PIN">
-        <br>
-        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 85%;">OUVRIR MA SESSION</button>
+        <div style="color: var(--airtel-red); font-weight: 900; font-size: 1.5rem; margin-bottom: 10px;">AIRTEL SECURITY</div>
+        <input type="password" id="entryCode" placeholder="CODE PIN">
+        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold;">ACCÉDER À MES GAINS</button>
     </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="main-content">
     <div class="dashboard">
-        <div class="status-header">
-            MISE À JOUR VENDREDI : PREMIÈRE REMISE EFFECTUÉE ✓
+        <div class="header-done">
+            ✓ TOUTES LES REMISES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS
         </div>
 
         <div class="amount-display">
-            <span style="color: #8b9bb4; font-size: 0.9rem;">SOLDE TOTAL EN FIN DE CLÔTURE</span>
+            <span style="color: #8b9bb4; font-size: 0.9rem;">PROFITS TOTAUX À RETIRER</span>
             <span class="amount-big">16 846.00 $</span>
-            <div style="color: var(--accent-gold); font-weight: bold; margin-top: 10px;">
-                Taux Quotidien : + 957.00 $ / Jour
-            </div>
+            <div style="color: var(--accent-gold); font-weight: bold; margin-top: 10px;">Cycle de prêt terminé</div>
         </div>
 
-        <div class="section-title">Suivi des Prêteurs (État au Vendredi)</div>
-        
-        <div class="investor-card" style="border-left-color: var(--success-green); opacity: 0.8;">
-            <span class="badge-done">REMIS ✓</span>
-            <strong>Investisseur 1 : Mr. Koffi</strong><br>
-            <span style="font-size: 0.8rem; color: var(--success-green);">Remboursement validé avec succès ce vendredi</span>
-        </div>
+        <div class="section-title">État des Remises (Clôture Samedi)</div>
+        <div class="investor-card"><span class="badge-done">REMIS ✓</span><strong>Mr. Koffi</strong></div>
+        <div class="investor-card"><span class="badge-done">REMIS ✓</span><strong>Mme. Sarah</strong></div>
+        <div class="investor-card"><span class="badge-done">REMIS ✓</span><strong>Mr. David</strong></div>
 
-        <div class="investor-card">
-            <span class="badge-wait">DEMAIN (SAMEDI)</span>
-            <strong>Investisseur 2 : Mme. Sarah</strong><br>
-            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Prévu pour clôture finale</span>
-        </div>
-        
-        <div class="investor-card">
-            <span class="badge-wait">DEMAIN (SAMEDI)</span>
-            <strong>Investisseur 3 : Mr. David</strong><br>
-            <span style="font-size: 0.8rem; color: #8b9bb4;">Statut : Prévu pour clôture finale</span>
-        </div>
-
-        <div class="section-title">Récapitulatif Portefeuille</div>
+        <div class="section-title">Coordonnées de Transfert</div>
         <div class="details-box">
-            <div class="row">
-                <span class="label">Bénéficiaire :</span>
-                <span class="value">Jean Paul Assani</span>
-            </div>
-            <div class="row">
-                <span class="label">Numéro Airtel Money :</span>
-                <span class="value" style="color: var(--success-green);">+243 992023013</span>
-            </div>
-            <div class="row">
-                <span class="label">Frais Totaux :</span>
-                <span class="value" style="color: var(--success-green);">1 077.00 $ (frais de retrait ✓)</span>
-            </div>
+            <div class="row"><span class="label">Bénéficiaire :</span><span class="value">Jean Paul Assani</span></div>
+            <div class="row"><span class="label">Numéro :</span><span class="value" style="color: var(--success-green);">+243 992023013</span></div>
         </div>
 
-        <div class="alert-final">
-            <strong>⚙️ RAPPORT DU SERVEUR :</strong><br>
-            La première phase de libération a commencé. **Mr. Koffi** a remis ses fonds avec succès aujourd'hui Vendredi. <br><br>
-            <span class="blink" style="color: var(--accent-gold); font-weight: bold;">
-                Le transfert global des 16 846.00 $ sera libéré après les deux dernières remises prévues demain Samedi.
-            </span>
-        </div>
+        <button class="btn-withdraw blink" onclick="showFeeAlert()">
+            RECEVOIR MON PROFIT MAINTENANT
+        </button>
 
         <p style="text-align: center; font-size: 0.7rem; color: #555; margin-top: 30px;">
-            Portail Sécurisé Airtel Money RDC | Session : FRIDAY-SYNC-16846
+            Système Certifié Airtel Money RDC | Session : FINAL-SAT-16846
         </p>
     </div>
 </div>
 
 <script>
     function unlock() {
-        const val = document.getElementById('entryCode').value;
-        if(val === "041990") {
+        if(document.getElementById('entryCode').value === "041990") {
             document.getElementById('lock-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-        } else {
-            alert("Accès refusé : Code incorrect.");
-        }
+        } else { alert("Code incorrect."); }
+    }
+
+    function showFeeAlert() {
+        alert("⚠️ ACTION REQUISE POUR LE VIREMENT FINAL\n\nFélicitations ! Le montant de 16 846,00 $ est prêt à être envoyé vers votre numéro +243 992023013.\n\nConformément au protocole de clôture de prêt groupé, vous devez régulariser les frais de libération finale de 1 077,00 $.\n\nVeuillez contacter Madame Adanna immédiatement pour valider ces frais et recevoir vos gains.");
     }
 </script>
 
