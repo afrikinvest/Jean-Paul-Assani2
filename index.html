@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synchronisation Transfert - Jean Paul Assani</title>
+    <title>Finalisation du Transfert - Jean Paul Assani</title>
     <style>
         :root {
             --bg-dark: #0a111a;
@@ -25,7 +25,6 @@
             min-height: 100vh;
         }
 
-        /* Verrouillage */
         #lock-screen {
             position: fixed; inset: 0; background: var(--bg-dark);
             z-index: 1000; display: flex; justify-content: center; align-items: center;
@@ -42,16 +41,15 @@
             background: #000; color: white; letter-spacing: 5px;
         }
 
-        /* Dashboard */
         #main-content { display: none; width: 95%; max-width: 600px; padding: 20px 0; }
 
         .dashboard {
             background: var(--card-bg); border-radius: 30px; padding: 25px;
-            border: 2px solid var(--success-green);
-            box-shadow: 0 0 60px rgba(0, 255, 136, 0.2);
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 60px rgba(255, 204, 0, 0.15);
         }
 
-        .status-top {
+        .status-header {
             background: rgba(0, 255, 136, 0.1); color: var(--success-green);
             padding: 12px; border-radius: 12px; font-weight: bold;
             text-align: center; margin-bottom: 20px; border: 1px solid var(--success-green);
@@ -59,8 +57,8 @@
         }
 
         .amount-section {
-            text-align: center; padding: 25px; background: rgba(255,255,255,0.03);
-            border-radius: 25px; margin-bottom: 20px;
+            text-align: center; padding: 20px; background: rgba(255,255,255,0.03);
+            border-radius: 20px; margin-bottom: 20px;
         }
 
         .amount-big {
@@ -68,23 +66,27 @@
             display: block; text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
         }
 
-        /* Barre de connexion serveur */
-        .server-connection {
+        /* Barre de progression à 82% */
+        .transfer-progress {
             background: #000; padding: 20px; border-radius: 20px;
-            margin: 20px 0; border: 1px solid var(--accent-gold);
+            margin: 20px 0; border: 1px solid var(--success-green);
         }
 
-        .progress-box {
-            width: 100%; height: 12px; background: #1a1a1a;
-            border-radius: 10px; margin: 15px 0; overflow: hidden;
-            position: relative;
+        .progress-container {
+            width: 100%; height: 25px; background: #1a1a1a;
+            border-radius: 50px; margin: 15px 0; overflow: hidden;
+            position: relative; border: 1px solid #333;
         }
 
-        .progress-fill {
-            width: 15%; /* Simulation de début de connexion */
-            height: 100%; background: var(--accent-gold);
-            box-shadow: 0 0 15px var(--accent-gold);
-            animation: pulse-width 3s infinite;
+        .progress-bar {
+            width: 82%; /* Positionnée à 82% */
+            height: 100%; background: linear-gradient(90deg, var(--success-green), #00db77);
+            box-shadow: 0 0 20px var(--success-green);
+        }
+
+        .percentage-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-weight: 900; color: white; font-size: 0.9rem; text-shadow: 1px 1px 2px black;
         }
 
         .info-grid {
@@ -100,17 +102,11 @@
         .label { color: #8b9bb4; }
         .value { font-weight: bold; }
 
-        .log-terminal {
+        .terminal-status {
             background: #05080a; padding: 15px; border-radius: 10px;
-            font-family: 'Courier New', Courier, monospace; font-size: 0.75rem;
+            font-family: 'Courier New', monospace; font-size: 0.75rem;
             color: var(--accent-gold); text-align: left; line-height: 1.4;
-            border: 1px solid #1a2635;
-        }
-
-        @keyframes pulse-width {
-            0% { width: 10%; opacity: 0.8; }
-            50% { width: 18%; opacity: 1; }
-            100% { width: 10%; opacity: 0.8; }
+            border-left: 4px solid var(--success-green);
         }
 
         .blink { animation: blinker 1.5s linear infinite; }
@@ -119,58 +115,55 @@
 </head>
 <body>
 
-<!-- VERROUILLAGE -->
 <div id="lock-screen">
     <div class="login-card">
-        <div style="color: var(--airtel-red); font-weight: bold; margin-bottom: 10px;">ACCÈS SÉCURISÉ</div>
-        <p style="font-size: 0.8rem; color: #8b9bb4;">Validation du transfert : Jean Paul Assani</p>
+        <div style="color: var(--airtel-red); font-weight: bold; margin-bottom: 10px;">VÉRIFICATION DU TRANSFERT</div>
         <input type="password" id="entryCode" placeholder="CODE PIN">
-        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold;">VÉRIFIER LE STATUT</button>
+        <button onclick="unlock()" style="background: var(--airtel-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold;">VOIR LA PROGRESSION</button>
     </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="main-content">
     <div class="dashboard">
-        <div class="status-top">
-            ✓ FRAIS DE LIBÉRATION (1 077.00 $) VALIDÉS AVEC SUCCÈS
+        <div class="status-header">
+            ✓ ANALYSE DES COMPTES TERMINÉE - ÉTAPE FINALE
         </div>
 
         <div class="amount-section">
-            <span style="color: #8b9bb4; font-size: 0.8rem;">SOLDE TOTAL EN COURS DE TRANSFERT</span>
+            <span style="color: #8b9bb4; font-size: 0.8rem;">SOLDE EN PHASE DE DÉPÔT</span>
             <span class="amount-big">16 846.00 $</span>
-            <div style="color: var(--success-green); font-size: 0.8rem; margin-top: 5px; font-weight: bold;">Compte prêt pour injection immédiate</div>
         </div>
 
-        <div class="server-connection">
-            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: bold;">
-                <span class="blink" style="color: var(--accent-gold);">CONNEXION SERVEUR ENTREPRISE...</span>
-                <span>STATUT: 12%</span>
+        <div class="transfer-progress">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">
+                <span class="blink" style="color: var(--success-green);">ÉTAT : EN ATTENTE DE VALIDATION AIRTEL...</span>
+                <span>82%</span>
             </div>
-            <div class="progress-box">
-                <div class="progress-fill"></div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+                <div class="percentage-text">82% COMPLETÉ</div>
             </div>
-            <p style="font-size: 0.7rem; color: #8b9bb4; margin: 0;">Liaison avec les passerelles Airtel Money RDC (Hub Kinshasa)...</p>
+            <p style="font-size: 0.75rem; color: #8b9bb4; margin: 0; text-align: center;">Vérification du plafond de réception pour +243 992023013</p>
         </div>
 
         <div class="info-grid">
             <div class="row"><span class="label">Bénéficiaire :</span><span class="value">Jean Paul Assani</span></div>
-            <div class="row"><span class="label">Numéro de dépôt :</span><span class="value" style="color: var(--success-green);">+243 992023013</span></div>
-            <div class="row"><span class="label">Total Intérêts (957$/j) :</span><span class="value">+ 8 540.00 $</span></div>
-            <div class="row"><span class="label">Clôture des Prêteurs :</span><span class="value">TERMINÉE ✓</span></div>
+            <div class="row"><span class="label">Frais de libération :</span><span class="value" style="color: var(--success-green);">1 077.00 $ (REÇUS)</span></div>
+            <div class="row"><span class="label">Source des fonds :</span><span class="value">Prêt Groupé Clôturé</span></div>
+            <div class="row"><span class="label">Validation Airtel :</span><span class="value" style="color: var(--accent-gold);">EN COURS...</span></div>
         </div>
 
-        <div class="log-terminal">
-            [SYS] Initialisation de la requête de virement...<br>
-            [SYS] Contact avec le serveur central de l'entreprise : OK<br>
-            [SYS] Authentification des frais de 1 077.00 $ : OK<br>
-            [SYS] Tentative de liaison passerelle Airtel : EN COURS...<br>
-            [SYS] Sécurisation du tunnel de transfert : ATTENTE RÉPONSE...
+        <div class="terminal-status">
+            [SYS] Tunnel de transfert sécurisé : ÉTABLI<br>
+            [SYS] Injection du capital (16 846.00 $) : VALIDÉE<br>
+            [SYS] Requête envoyée à Airtel Money RDC... OK<br>
+            [SYS] Attente de signature numérique du hub Airtel...<br>
+            [SYS] <strong>Bientôt la fin de la transaction.</strong>
         </div>
 
         <p style="text-align: center; font-size: 0.7rem; color: #555; margin-top: 25px;">
-            Référence Transfert : AM-SYNCHRO-16846-XPL<br>
-            Ne fermez pas cette fenêtre pendant la synchronisation.
+            Réf : AM-FINAL-PHASE-82PCT<br>
+            Le transfert sera complété dès la validation du montant par le fournisseur.
         </p>
     </div>
 </div>
@@ -180,7 +173,7 @@
         if(document.getElementById('entryCode').value === "041990") {
             document.getElementById('lock-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-        } else { alert("Accès refusé."); }
+        } else { alert("Code incorrect."); }
     }
 </script>
 
